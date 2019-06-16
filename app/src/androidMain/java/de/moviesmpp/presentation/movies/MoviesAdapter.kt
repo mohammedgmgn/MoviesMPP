@@ -13,6 +13,7 @@ import de.moviesmpp.domain.model.Movie
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     var movies: List<Movie> = emptyList()
+
         set(value) {
             field = value
             notifyDataSetChanged()

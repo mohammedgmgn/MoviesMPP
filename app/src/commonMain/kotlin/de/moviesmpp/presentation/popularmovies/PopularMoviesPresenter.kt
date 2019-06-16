@@ -22,8 +22,14 @@ class PopularMoviesPresenter(
         scope.launch {
             getPopularMovies(
                 UseCase.None,
-                onSuccess = { view?.setPopularMovies(it.results) },
-                onFailure = { view?.showMoviesFailedToLoad() }
+                onSuccess = {
+                    view?.setPopularMovies(it.results)
+                },
+                onFailure = {
+                    view?.setLoadingVisible(false)
+
+                    view?.showMoviesFailedToLoad()
+                }
             )
             view?.setLoadingVisible(false)
         }

@@ -13,8 +13,9 @@ import io.ktor.client.response.readText
 import io.ktor.http.URLProtocol
 import kotlinx.serialization.json.Json
 
-private const val BASE_URL = "api.themoviedb.org/4"
+private const val BASE_URL = "api.themoviedb.org/3/movie"
 private const val HEADER_AUTHORIZATION = "Authorization"
+private const val API_KEY = "357955f67e69d522c2235c5baac2e4c3"
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class MoviesApi(clientEngine: HttpClientEngine) {
@@ -33,13 +34,13 @@ class MoviesApi(clientEngine: HttpClientEngine) {
             url {
                 protocol = URLProtocol.HTTPS
                 host = BASE_URL
-                encodedPath = "/discover/movie"
-                parameter("sort_by", "popularity.desc")
-                header(HEADER_AUTHORIZATION, API_KEY.asBearerToken())
+                encodedPath = "/popular"
+                parameter("api_key", API_KEY)
             }
         }
 
         val jsonBody = response.readText()
+
         return Json.parse(PopularMoviesEntity.serializer(), jsonBody)
     }
 }

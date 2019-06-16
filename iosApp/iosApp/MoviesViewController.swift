@@ -1,5 +1,4 @@
 import UIKit
-import main
 
 /// Implements the shared Kotlin interface (now a protocol) and besides only renders the movies.
 /// Doesn't show any loading indicators as movies are loaded from network on the main thread.
