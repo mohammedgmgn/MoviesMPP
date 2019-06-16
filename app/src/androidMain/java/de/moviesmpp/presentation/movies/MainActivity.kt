@@ -1,5 +1,6 @@
 package de.moviesmpp.presentation.movies
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,12 +20,17 @@ class MainActivity : AppCompatActivity(), PopularMoviesView {
 
     private val presenter by lazy { ServiceLocator.popularMoviesPresenter }
 
-    private val moviesAdapter = MoviesAdapter()
+    private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        moviesAdapter = MoviesAdapter { movie, _ ->
+            val i = Intent(this, DetailActivity::class.java)
+            i.putExtra(MOVIE_ID, movie.id)
+            startActivity(i);
 
+        }
         rv_movies.apply {
             layoutManager = GridLayoutManager(this@MainActivity, 2)
             adapter = moviesAdapter
