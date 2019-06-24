@@ -16,4 +16,5 @@ class GetPopularMovies(private val moviesApi: MoviesApi) : UseCase<PopularMovies
             Failure(e)
         }
     }
+
 }

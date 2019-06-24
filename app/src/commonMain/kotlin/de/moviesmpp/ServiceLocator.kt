@@ -3,7 +3,10 @@
 package de.moviesmpp
 
 import de.moviesmpp.data.MoviesApi
+import de.moviesmpp.data.local.MoviesRepository
 import de.moviesmpp.domain.usecase.GetPopularMovies
+import de.moviesmpp.domain.usecase.MovieDetailUseCase
+import de.moviesmpp.presentation.popularmovies.MoviesDetailesPresenter
 import de.moviesmpp.presentation.popularmovies.PopularMoviesPresenter
 import io.ktor.client.engine.HttpClientEngine
 import kotlin.native.concurrent.ThreadLocal
@@ -15,9 +18,17 @@ import kotlin.native.concurrent.ThreadLocal
 object ServiceLocator {
 
     val moviesApi by lazy { MoviesApi(PlatformServiceLocator.httpClientEngine) }
+    val moviesRepo by lazy { MoviesRepository() }
 
     val getPopularMovies: GetPopularMovies
         get() = GetPopularMovies(moviesApi)
+
+
+   val detailUseCase: MovieDetailUseCase  get() = MovieDetailUseCase(moviesRepo)
+
+
+    val detailMoviesPresenter: MoviesDetailesPresenter
+        get() = MoviesDetailesPresenter(detailUseCase)
 
     val popularMoviesPresenter: PopularMoviesPresenter
         get() = PopularMoviesPresenter(getPopularMovies)
